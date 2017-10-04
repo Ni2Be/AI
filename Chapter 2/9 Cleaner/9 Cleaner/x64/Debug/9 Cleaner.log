@@ -1,2 +1,17 @@
-﻿  9 Cleaner.vcxproj -> D:\Programmieren\ai\Chapter 2\9 Cleaner\x64\Debug\9 Cleaner.exe
-  9 Cleaner.vcxproj -> D:\Programmieren\ai\Chapter 2\9 Cleaner\x64\Debug\9 Cleaner.pdb (Full PDB)
+﻿  Agent_Vacuum_Cleaner.cpp
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\agent_vacuum_cleaner.h(18): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\agent_vacuum_cleaner.cpp(14): warning C4244: "Argument": Konvertierung von "const float" in "int", möglicher Datenverlust
+  main.cpp
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\agent_vacuum_cleaner.h(18): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\game.h(20): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\game.h(25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\game.h(29): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+  Game.cpp
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\agent_vacuum_cleaner.h(18): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\game.h(20): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\game.h(25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\game.h(29): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+  Area.cpp
+  Code wird generiert...
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\area.cpp(57): warning C4715: "Area::get_tile_on_pos": Nicht alle Steuerelementpfade geben einen Wert zurück.
+  9 Cleaner.vcxproj -> D:\Programmieren\AI\Chapter 2\9 Cleaner\x64\Debug\9 Cleaner.exe
