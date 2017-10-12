@@ -18,11 +18,12 @@ public:
 		m_rows				(rows),
 		m_columns			(columns),
 		m_background		(sf::Vector2f (width, height)),
-		m_cleaning_area		(width, height, columns, rows),
-		m_cleaner			((width  / columns) / 2, 
+		m_cleaning_area		(area_factory_std(width, height, columns, rows)),
+		m_cleaner			((width  / columns) / 2,
 							 (height / rows) / 2, 
 							 ((height / rows) / 6 > (width / columns) / 6)? (width / columns) / 6 : (height / rows) / 6)
 	{
+
 		std::random_device					rd;
 		std::uniform_int_distribution<int>	dist_h(1, rows - 1);
 		std::uniform_int_distribution<int>	dist_v(1, columns - 1);
@@ -35,6 +36,8 @@ public:
 	void run();
 
 private:
+	Area& area_factory_std(int width, int height, int column_count, int row_count);
+
 	const int			 m_width;
 	const int			 m_height;
 	const int			 m_rows;

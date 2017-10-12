@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include <memory>
 
 void Game::run()
 {
@@ -43,5 +44,45 @@ void Game::run()
 		this->			display();
 
 		sf::sleep(sf::milliseconds(41));
+	}
+}
+
+Area& Game::area_factory_std(int width, int height, int column_count, int row_count)
+{
+	auto area = std::make_unique<Area>(new Area(width, height, column_count, row_count));
+
+	float horizontal_tile_size	= width  / static_cast<float>(column_count);
+	float vertical_tile_size	= height / static_cast<float>(row_count);
+
+	for (int h = 0; h < row_count + 2; h++)
+	{
+		std::vector<Tile> row;
+		for (int w = 0; w < column_count + 2; w++)
+		{
+			if ((h == 0) || (h == row_count + 1)
+				|| (w == 0) || (w == column_count + 1))
+			{
+				row.push_back(Tile(
+					horizontal_tile_size,
+					vertical_tile_size,
+					w * horizontal_tile_size,
+					h * vertical_tile_size,
+					true,
+					true,
+					(h * column_count) + w));
+			}
+			else
+			{
+				row.push_back(Tile(
+					horizontal_tile_size,
+					vertical_tile_size,
+					w * horizontal_tile_size,
+					h * vertical_tile_size,
+					true,
+					false,
+					(h * column_count) + w));
+			}
+		}
+		area.tiles.push_back(row);
 	}
 }

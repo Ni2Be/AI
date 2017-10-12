@@ -1,6 +1,22 @@
-﻿  Code wird generiert.
-d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\area.cpp(57): warning C4715: "Area::get_tile_on_pos": Nicht alle Steuerelementpfade geben einen Wert zurück.
-  All 311 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+﻿  Agent_Vacuum_Cleaner.cpp
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\Agent_Vacuum_Cleaner.h(18): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+Agent_Vacuum_Cleaner.cpp(14): warning C4244: "Argument": Konvertierung von "const float" in "int", möglicher Datenverlust
+  Area.cpp
+  Game.cpp
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\Agent_Vacuum_Cleaner.h(18): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\Game.h(20): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\Game.h(25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\Game.h(29): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+  main.cpp
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\Agent_Vacuum_Cleaner.h(18): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\Game.h(20): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\Game.h(25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\Game.h(29): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+  Code wird generiert.
+d:\programmieren\ai\chapter 2\9 cleaner\9 cleaner\area.cpp(73): warning C4715: "Area::get_tile_on_pos": Nicht alle Steuerelementpfade geben einen Wert zurück.
+  111 of 312 functions (35.6%) were compiled, the rest were copied from previous compilation.
+    27 functions were new in current compilation
+    10 functions had inline decision re-evaluated but remain unchanged
   Codegenerierung ist abgeschlossen.
-  9 Cleaner.vcxproj -> D:\Programmieren\AI\Chapter 2\9 Cleaner\x64\Release\9 Cleaner.exe
-  9 Cleaner.vcxproj -> D:\Programmieren\AI\Chapter 2\9 Cleaner\x64\Release\9 Cleaner.pdb (Full PDB)
+  9 Cleaner.vcxproj -> D:\Programmieren\ai\Chapter 2\9 Cleaner\x64\Release\9 Cleaner.exe
+  9 Cleaner.vcxproj -> D:\Programmieren\ai\Chapter 2\9 Cleaner\x64\Release\9 Cleaner.pdb (Full PDB)
