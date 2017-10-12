@@ -27,6 +27,9 @@
     <ClCompile Include="Agent_Vacuum_Cleaner.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Area.h">
@@ -36,6 +39,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Agent_Vacuum_Cleaner.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

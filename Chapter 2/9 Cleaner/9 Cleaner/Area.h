@@ -31,9 +31,12 @@ public:
 	void draw_to_window(sf::RenderWindow *win);
 	Tile& get_tile_on_pos(int x, int y);
 
+	//adds a row to the std::vector<Tile> m_tiles
+	void add_row(std::vector<Tile> row);
 
 	//not used at the moment
 	std::vector<Tile>& operator[](std::size_t index);
+
 
 	int		width()					{ return m_width; };
 	int		height()				{ return m_height; };
@@ -71,7 +74,7 @@ public:
 		else
 			this->setFillColor(clean);
 		if(m_is_obstacle)
-			this->setFillColor(dirty);
+			this->setFillColor(obstacle);
 
 		this->setOutlineColor		(sf::Color::Black);
 		this->setOutlineThickness	(-(width / 40));

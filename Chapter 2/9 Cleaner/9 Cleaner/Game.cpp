@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Physics.h"
 
 #include <memory>
 
@@ -12,6 +13,8 @@ void Game::run()
 		<< std::endl;
 	while (this->isOpen())
 	{
+		Physics::update_time();
+
 		sf::Event event;
 		while (this->	pollEvent(event))
 		{
@@ -49,40 +52,64 @@ void Game::run()
 
 Area& Game::area_factory_std(int width, int height, int column_count, int row_count)
 {
-	auto area = std::make_unique<Area>(new Area(width, height, column_count, row_count));
+	int column_count_with_border = column_count + 2;
+	int row_count_with_border	 = row_count + 2;
+	auto area					 = std::make_unique<Area>(width, height, 
+									column_count_with_border, row_count_with_border);
 
-	float horizontal_tile_size	= width  / static_cast<float>(column_count);
-	float vertical_tile_size	= height / static_cast<float>(row_count);
-
+	
 	for (int h = 0; h < row_count + 2; h++)
 	{
 		std::vector<Tile> row;
-		for (int w = 0; w < column_count + 2; w++)
+		for (int w = 0; w < area->column_count(); w++)
 		{
-			if ((h == 0) || (h == row_count + 1)
-				|| (w == 0) || (w == column_count + 1))
+			if ((h == 0) || (h == area->row_count() - 1)
+				|| (w == 0) || (w == area->column_count() - 1))
 			{
 				row.push_back(Tile(
-					horizontal_tile_size,
-					vertical_tile_size,
-					w * horizontal_tile_size,
-					h * vertical_tile_size,
+					area->horizontal_tile_size(),
+					area->vertical_tile_size(),
+					w * area->horizontal_tile_size(),
+					h * area->vertical_tile_size(),
+					false,
 					true,
-					true,
-					(h * column_count) + w));
+					(h * area->column_count()) + w));
 			}
 			else
 			{
 				row.push_back(Tile(
-					horizontal_tile_size,
-					vertical_tile_size,
-					w * horizontal_tile_size,
-					h * vertical_tile_size,
+					area->horizontal_tile_size(),
+					area->vertical_tile_size(),
+					w * area->horizontal_tile_size(),
+					h * area->vertical_tile_size(),
 					true,
 					false,
-					(h * column_count) + w));
+					(h * area->column_count()) + w));
 			}
 		}
-		area.tiles.push_back(row);
+		area->add_row(row);
 	}
+	return *area.release();
+}
+
+//will fail if there is no tile that's no obstacle
+void Game::place_on_rand_tile(Agent_Vacuum_Cleaner& cleaner)
+{
+	//place the cleaner on a random position that's no obstacle
+	std::random_device					rd;
+	std::uniform_int_distribution<int>	dist_h(0, m_cleaning_area.column_count() - 1);
+	std::uniform_int_distribution<int>	dist_v(0, m_cleaning_area.row_count() - 1);
+
+	float h_tile_distance;
+	float v_tile_distance;
+	do
+	{
+		int h_tile_count = dist_h(rd);
+		int v_tile_count = dist_v(rd);
+
+		h_tile_distance = h_tile_count * m_cleaning_area.horizontal_tile_size() + m_cleaning_area.horizontal_tile_size() / 2;
+		v_tile_distance = v_tile_count * m_cleaning_area.vertical_tile_size() + m_cleaning_area.vertical_tile_size() / 2;
+	} while (m_cleaning_area.get_tile_on_pos(h_tile_distance, v_tile_distance).is_obstacle());
+
+	cleaner.setPosition(h_tile_distance, v_tile_distance);
 }

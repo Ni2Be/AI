@@ -24,6 +24,7 @@ public:
 private:
 	int		m_x_direction = 1;
 	int		m_y_direction = 1;
+	int		speed		  = 10;
 
 	bool	m_is_moving_sideways = true;
 

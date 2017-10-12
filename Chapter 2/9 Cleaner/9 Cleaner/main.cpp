@@ -1,3 +1,5 @@
+
+
 #include <SFML/Graphics.hpp>
 
 
@@ -5,7 +7,7 @@
 
 int main()
 {
-	Game cleaner_game(800, 800, 5, 5);
+	Game cleaner_game(800, 800, 5, 1);
 
 
 	cleaner_game.run();

@@ -8,7 +8,8 @@ Area::Area(int width, int height, int column_count, int row_count)
 	m_row_count		(row_count),
 	m_column_count	(column_count)
 {
-
+	m_horizontal_tile_size = width / static_cast<float>(column_count);
+	m_vertical_tile_size   = height / static_cast<float>(row_count);
 }
 
 void Area::draw_to_window(sf::RenderWindow *win)
@@ -37,6 +38,11 @@ Tile& Area::get_tile_on_pos(int x, int y)
 			}
 		}
 	}
+}
+
+void Area::add_row(std::vector<Tile> row)
+{
+	this->m_tiles.push_back(row);
 }
 
 std::vector<Tile>& Area::operator[](std::size_t index)

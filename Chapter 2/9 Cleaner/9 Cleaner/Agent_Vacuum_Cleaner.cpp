@@ -1,5 +1,5 @@
 #include "Agent_Vacuum_Cleaner.h"
-
+#include "Physics.h"
 //#define FEEDBACK
 
 void Agent_Vacuum_Cleaner::act(Area& area)
@@ -9,8 +9,6 @@ void Agent_Vacuum_Cleaner::act(Area& area)
 #endif
 	m_time_counter++;
 
-	// could also get the actual tile from the row/column number, 
-	// but it's not as agile as searching for the tile that's under the actual position	
 	Tile& actual_tile	= area.get_tile_on_pos(this->getPosition().x, this->getPosition().y);
 	
 	if (actual_tile.is_dirty())
@@ -23,92 +21,95 @@ void Agent_Vacuum_Cleaner::act(Area& area)
 	}
 	else
 	{
-		/*
-		DEBUG
-		std::cout <<
-			"wc: " << m_width_counter << std::endl <<
-			"wm: " << m_width_memory << std::endl <<
-			"hc: " << m_height_counter << std::endl <<
-			"hm: " << m_height_memory << std::endl <<
-			"side: " << m_is_moving_sideways << std::endl;
-		*/
-		if (m_width_counter == 0)
-		{
-			m_width_memory++;
-			m_width_counter = m_width_memory;
-
-			m_is_moving_sideways = false;
-			m_x_direction *= -1;
-		}
-		else if (m_height_counter == 0)
-		{
-			m_height_memory++;
-			m_height_counter = m_height_memory;
-
-			m_is_moving_sideways = true;
-			m_y_direction *= -1;
-		}
-		
-		m_performance_counter--;
-		
-		//move horizontal
-		if (m_is_moving_sideways
-			&& (area.horizontal_tile_size() * m_x_direction + this->getPosition().x < area.width())
-			&& (area.horizontal_tile_size() * m_x_direction + this->getPosition().x > 0))
-		{
-			this->move(sf::Vector2f(area.horizontal_tile_size() * m_x_direction, 0));
-			m_width_counter--;
-		}
-		//move vertical
-		else if (!m_is_moving_sideways
-			&& (area.vertical_tile_size() * m_y_direction + this->getPosition().y < area.height())
-			&& (area.vertical_tile_size() * m_y_direction + this->getPosition().y > 0))
-		{
-			this->move(sf::Vector2f(0, area.vertical_tile_size() * m_y_direction));
-			m_height_counter--;
-		}
-		//hit edge horizontal
-		else if (m_is_moving_sideways)
-		{
-			m_x_direction *= -1;
-			m_width_counter = m_width_memory;
-			
-			//move one up or down
-			m_height_memory++;
-			m_height_counter = m_height_memory;
-			m_y_direction *= -1;
-			if ((area.vertical_tile_size() * m_y_direction + this->getPosition().y < area.height())
-				&& (area.vertical_tile_size() * m_y_direction + this->getPosition().y > 0))
-				this->move(sf::Vector2f(0, area.vertical_tile_size() * m_y_direction));
-			else
-			{
-
-				m_height_memory--;
-				m_height_counter = m_height_memory;
-			}
-			m_y_direction *= -1;
-		}
-		//hit edge vertical
+		int delta_x = 1;
+		int delta_y = 1;
+		if (!area.get_tile_on_pos(this->getPosition().x + delta_x, this->getPosition().y + delta_y).is_obstacle())
+			this->move(delta_x, delta_y);
 		else
 		{
+			m_x_direction *= -1;
 			m_y_direction *= -1;
-			m_height_counter = m_height_memory;
-
-			//move one left or right
-			m_width_memory++;
-			m_width_counter = m_width_memory;
-			m_x_direction *= -1;
-			if (   (area.horizontal_tile_size() * m_x_direction + this->getPosition().x < area.width())
-				&& (area.horizontal_tile_size() * m_x_direction + this->getPosition().x > 0))
-				this->move(sf::Vector2f(area.horizontal_tile_size() * m_x_direction, 0));
-			else
-			{
-				m_width_memory--;
-				m_width_counter = m_width_memory;
-			}
-			m_x_direction *= -1;
 		}
 	}
+	//else
+	//{
+	//	if (m_width_counter == 0)
+	//	{
+	//		m_width_memory++;
+	//		m_width_counter = m_width_memory;
+
+	//		m_is_moving_sideways = false;
+	//		m_x_direction *= -1;
+	//	}
+	//	else if (m_height_counter == 0)
+	//	{
+	//		m_height_memory++;
+	//		m_height_counter = m_height_memory;
+
+	//		m_is_moving_sideways = true;
+	//		m_y_direction *= -1;
+	//	}
+	//	
+	//	m_performance_counter--;
+	//	
+	//	//move horizontal
+	//	if (m_is_moving_sideways
+	//		&& (area.horizontal_tile_size() * m_x_direction + this->getPosition().x < area.width())
+	//		&& (area.horizontal_tile_size() * m_x_direction + this->getPosition().x > 0))
+	//	{
+	//		this->move(sf::Vector2f(area.horizontal_tile_size() * m_x_direction, 0));
+	//		m_width_counter--;
+	//	}
+	//	//move vertical
+	//	else if (!m_is_moving_sideways
+	//		&& (area.vertical_tile_size() * m_y_direction + this->getPosition().y < area.height())
+	//		&& (area.vertical_tile_size() * m_y_direction + this->getPosition().y > 0))
+	//	{
+	//		this->move(sf::Vector2f(0, area.vertical_tile_size() * m_y_direction));
+	//		m_height_counter--;
+	//	}
+	//	//hit edge horizontal
+	//	else if (m_is_moving_sideways)
+	//	{
+	//		m_x_direction *= -1;
+	//		m_width_counter = m_width_memory;
+	//		
+	//		//move one up or down
+	//		m_height_memory++;
+	//		m_height_counter = m_height_memory;
+	//		m_y_direction *= -1;
+	//		if ((area.vertical_tile_size() * m_y_direction + this->getPosition().y < area.height())
+	//			&& (area.vertical_tile_size() * m_y_direction + this->getPosition().y > 0))
+	//			this->move(sf::Vector2f(0, area.vertical_tile_size() * m_y_direction));
+	//		else
+	//		{
+
+	//			m_height_memory--;
+	//			m_height_counter = m_height_memory;
+	//		}
+	//		m_y_direction *= -1;
+	//	}
+	//	//hit edge vertical
+	//	else
+	//	{
+	//		m_y_direction *= -1;
+	//		m_height_counter = m_height_memory;
+
+	//		//move one left or right
+	//		m_width_memory++;
+	//		m_width_counter = m_width_memory;
+	//		m_x_direction *= -1;
+	//		if (   (area.horizontal_tile_size() * m_x_direction + this->getPosition().x < area.width())
+	//			&& (area.horizontal_tile_size() * m_x_direction + this->getPosition().x > 0))
+	//			this->move(sf::Vector2f(area.horizontal_tile_size() * m_x_direction, 0));
+	//		else
+	//		{
+	//			m_width_memory--;
+	//			m_width_counter = m_width_memory;
+	//		}
+	//		m_x_direction *= -1;
+	//	}
+	//}
 }
 
 void Agent_Vacuum_Cleaner::plot_statistics()
