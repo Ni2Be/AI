@@ -50,15 +50,15 @@ void Game::run()
 	}
 }
 
-Area& Game::area_factory_std(int width, int height, int column_count, int row_count)
+Area& Game::area_factory_std(int width, int height, int row_count, int column_count)
 {
-	int column_count_with_border = column_count + 2;
 	int row_count_with_border	 = row_count + 2;
+	int column_count_with_border = column_count + 2;
 	auto area					 = std::make_unique<Area>(width, height, 
-									column_count_with_border, row_count_with_border);
+									row_count_with_border, column_count_with_border);
 
 	
-	for (int h = 0; h < row_count + 2; h++)
+	for (int h = 0; h < area->row_count(); h++)
 	{
 		std::vector<Tile> row;
 		for (int w = 0; w < area->column_count(); w++)
@@ -91,6 +91,34 @@ Area& Game::area_factory_std(int width, int height, int column_count, int row_co
 	}
 	return *area.release();
 }
+
+
+Area& Game::area_factory_random_obstacles(int width, int height, int row_count, int column_count, int obstacle_count)
+{
+	Area& area = area_factory_std(width, height, row_count, column_count);
+
+	std::random_device					rd;
+	std::uniform_int_distribution<int>	dist_w(0, area.column_count() - 1);
+	std::uniform_int_distribution<int>	dist_h(0, area.row_count() - 1);
+
+	for (int i = 0; i < obstacle_count; i++)
+	{
+		int w = dist_w(rd);
+		int h = dist_h(rd);
+
+		if (area[h][w].is_obstacle())
+		{
+			i--;
+		}
+		else
+		{
+			area[h][w].is_obstacle() = true;
+			area[h][w].update_color();
+		}
+	}
+	return area;
+}
+
 
 //will fail if there is no tile that's no obstacle
 void Game::place_on_rand_tile(Agent_Vacuum_Cleaner& cleaner)

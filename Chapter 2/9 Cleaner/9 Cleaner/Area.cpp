@@ -1,7 +1,7 @@
 #include "Area.h"
 #include <iostream>
 
-Area::Area(int width, int height, int column_count, int row_count)
+Area::Area(int width, int height, int row_count, int column_count)
 	:
 	m_width			(width),
 	m_height		(height),
@@ -59,7 +59,22 @@ void Tile::clean_up()
 void Tile::update_color()
 {
 	if (this->m_is_dirty)
+	{
 		this->setFillColor(dirty);
+	}
 	else
+	{
 		this->setFillColor(clean);
+	}
+	if (this->m_is_obstacle)
+	{
+		this->setFillColor(obstacle);
+	}
 }
+
+//not working
+//void Tile::draw(sf::RenderTarget &target, sf::RenderStates states)
+//{
+//	update_color();
+//	this->draw(target, states);
+//}

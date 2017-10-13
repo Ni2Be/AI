@@ -21,10 +21,18 @@ public:
 	void act(Area& area);
 
 	void plot_statistics();
+	
+	int& x_speed() { return m_x_speed; }
+	int& y_speed() { return m_y_speed; }
+
 private:
+	void change_direction();
+	void evaluate_next_move();
+
 	int		m_x_direction = 1;
-	int		m_y_direction = 1;
-	int		speed		  = 10;
+	int		m_y_direction = 0;
+	int		m_x_speed = 1;
+	int		m_y_speed = 1;
 
 	bool	m_is_moving_sideways = true;
 

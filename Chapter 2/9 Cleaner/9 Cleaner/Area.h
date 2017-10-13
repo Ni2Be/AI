@@ -26,7 +26,7 @@ class Tile;
 class Area
 {
 public:
-	Area(int width, int height, int column_count, int row_count);
+	Area(int width, int height, int row_count, int column_count);
 
 	void draw_to_window(sf::RenderWindow *win);
 	Tile& get_tile_on_pos(int x, int y);
@@ -34,7 +34,7 @@ public:
 	//adds a row to the std::vector<Tile> m_tiles
 	void add_row(std::vector<Tile> row);
 
-	//not used at the moment
+
 	std::vector<Tile>& operator[](std::size_t index);
 
 
@@ -69,12 +69,7 @@ public:
 	m_is_dirty(is_dirty),
 	m_is_obstacle(is_obstacle)
 	{
-		if (is_dirty)
-			this->setFillColor(dirty);
-		else
-			this->setFillColor(clean);
-		if(m_is_obstacle)
-			this->setFillColor(obstacle);
+		update_color();
 
 		this->setOutlineColor		(sf::Color::Black);
 		this->setOutlineThickness	(-(width / 40));
@@ -85,10 +80,13 @@ public:
 	void clean_up();
 	void update_color();
 
-	bool is_dirty() { return m_is_dirty; };
-	bool is_obstacle() { return m_is_obstacle; };
+	bool& is_dirty() { return m_is_dirty; };
+	bool& is_obstacle() { return m_is_obstacle; };
 
 	int					m_number;
+
+	//would be nice
+	//void draw(sf::RenderTarget &target, sf::RenderStates states);
 private:
 	bool				m_is_dirty;
 	bool				m_is_obstacle = false;

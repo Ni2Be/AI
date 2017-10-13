@@ -21,14 +21,17 @@ void Agent_Vacuum_Cleaner::act(Area& area)
 	}
 	else
 	{
-		int delta_x = 1;
-		int delta_y = 1;
-		if (!area.get_tile_on_pos(this->getPosition().x + delta_x, this->getPosition().y + delta_y).is_obstacle())
+		int delta_x = m_x_speed * m_x_direction;
+		int delta_y = m_y_speed * m_y_direction;
+		if (!area.get_tile_on_pos(this->getPosition().x + delta_x, this->getPosition().y + delta_y)
+			.is_obstacle())
+		{
 			this->move(delta_x, delta_y);
+			evaluate_next_move();
+		}
 		else
 		{
-			m_x_direction *= -1;
-			m_y_direction *= -1;
+			change_direction();
 		}
 	}
 	//else
@@ -110,6 +113,53 @@ void Agent_Vacuum_Cleaner::act(Area& area)
 	//		m_x_direction *= -1;
 	//	}
 	//}
+}
+
+void Agent_Vacuum_Cleaner::change_direction()
+{
+	if (m_x_direction == 1 && m_y_direction == 0)
+	{
+		m_x_direction = 0;
+		m_y_direction = 1;
+	}
+	else if (m_x_direction == 0 && m_y_direction == 1)
+	{
+		m_x_direction = -1;
+		m_y_direction = 0;
+	}
+	else if (m_x_direction == -1 && m_y_direction == 0)
+	{
+		m_x_direction = 0;
+		m_y_direction = -1;
+	}
+	else if (m_x_direction == 0 && m_y_direction == -1)
+	{
+		m_x_direction = 1;
+		m_y_direction = 0;
+	}
+	//just in case
+	else
+	{
+		m_x_direction = 1;
+		m_y_direction = 0;
+	}
+}
+
+void Agent_Vacuum_Cleaner::evaluate_next_move()
+{
+	m_height_counter -= abs(m_x_direction);
+	m_width_counter  -= abs(m_y_direction);
+
+	if (m_height_counter == 0)
+	{
+		change_direction();
+		m_height_counter = ++m_height_memory;
+	}
+	if (m_width_counter == 0)
+	{
+		change_direction();
+		m_width_counter = ++m_width_memory;
+	}
 }
 
 void Agent_Vacuum_Cleaner::plot_statistics()
