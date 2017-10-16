@@ -20,7 +20,7 @@ folder as the .exe (as you probably know), they are
 license:
 You can use this code for anything you want. 
 The only restriction is the the sfml library
-(but it's not https://github.com/Nice2Bee/AI/blob/master/libs/SFML-2.4.2/license.txt)
+([but it's not](https://github.com/Nice2Bee/AI/blob/master/libs/SFML-2.4.2/license.txt))
 
 
 #### Image of the random agent after 1000 actions:
