@@ -1,4 +1,4 @@
-# AI
+# [AI](https://github.com/Nice2Bee/AI/tree/master)
 Artificial Intelligence: A Modern Approach
 ## Chapter 2
 ### Cleaner exercise:
