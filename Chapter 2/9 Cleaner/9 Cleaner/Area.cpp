@@ -23,23 +23,23 @@ void Area::draw_to_window(sf::RenderWindow *win)
 	}
 }
 
-
-//TODO needs to be unstupided
-Tile& Area::get_tile_on_pos(int x, int y)
+int	Area::float_modulo(float left, float right)
 {
-	for (int h = 0; h < m_row_count; h++)
+	int mod = 0;
+	while (left - right >= 0)
 	{
-		for (int w = 0; w < m_column_count; w++)
-		{
-			if (   (x >= m_tiles[h][w].getPosition().x) 
-				&& (x <= m_tiles[h][w].getPosition().x + m_horizontal_tile_size)
-				&& (y >= m_tiles[h][w].getPosition().y)
-				&& (y <= m_tiles[h][w].getPosition().y + m_vertical_tile_size))
-			{
-				return m_tiles[h][w];
-			}
-		}
+		left = left - right;
+		mod++;
 	}
+	return mod;
+}
+
+Tile& Area::get_tile_on_pos(float x, float y)
+{
+	int column  = float_modulo(x, m_horizontal_tile_size);
+	int row		= float_modulo(y, m_vertical_tile_size);
+
+	return m_tiles[row][column];
 }
 
 void Area::add_row(std::vector<Tile> row)
@@ -54,7 +54,7 @@ std::vector<Tile>& Area::operator[](std::size_t index)
 
 void Tile::clean_up()
 {
-	this->m_is_dirty	= false;
+	this->is_dirty()	= false;
 	this->update_color	();
 }
 
@@ -73,10 +73,3 @@ void Tile::update_color()
 		this->setFillColor(obstacle);
 	}
 }
-
-//not working
-//void Tile::draw(sf::RenderTarget &target, sf::RenderStates states)
-//{
-//	update_color();
-//	this->draw(target, states);
-//}

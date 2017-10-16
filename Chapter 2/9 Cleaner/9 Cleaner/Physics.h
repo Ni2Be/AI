@@ -1,9 +1,10 @@
+/*
+Just implements a simlpe delta_time variable
+Not used at the moment.
+*/
 #pragma once
 
 #include <SFML/System/Clock.hpp>
-
-#include <iostream>
-
 
 class Physics
 {

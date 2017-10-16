@@ -8,12 +8,15 @@ void Game::run()
 {
 	std::cout << 
 		"Usage:\n"
-		"i: 1000 iterations\n"
-		"o: one iteration\n"
+		"i: 1000 actions\n"
+		"o: one action\n"
 		"s: plot statistics\n"
 		<< std::endl;
+
+	//game loop
 	while (this->isOpen())
 	{
+		//not used at the moment
 		Physics::update_time();
 
 		sf::Event event;
@@ -21,22 +24,27 @@ void Game::run()
 		{
 			if (event.type == sf::Event::Closed)
 				this->	close();
+
+			//controlls
 			if (event.type == sf::Event::KeyPressed)
 			{
+				//do 1000 action
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
 				{
 					for (int i = 0; i < 1000; i++)
 						this->m_cleaner.act(this->m_cleaning_area);
 					m_cleaner.plot_statistics();
 				}
+				//do one action
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
 					this->m_cleaner.act(this->m_cleaning_area);
+				//plot statistics
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 					this->m_cleaner.plot_statistics();
 			}
 		}
+		//drawing
 		this->			clear();
-
 		this->			draw(m_background);
 		
 		//draw area
@@ -45,6 +53,7 @@ void Game::run()
 		//draw cleaner
 		this->			draw(m_cleaner);
 		
+		//swap buffer
 		this->			display();
 
 		sf::sleep(sf::milliseconds(41));
@@ -129,16 +138,18 @@ void Game::place_on_rand_tile(Agent_Vacuum_Cleaner& cleaner)
 	std::uniform_int_distribution<int>	dist_h(0, m_cleaning_area.column_count() - 1);
 	std::uniform_int_distribution<int>	dist_v(0, m_cleaning_area.row_count() - 1);
 
-	float h_tile_distance;
-	float v_tile_distance;
+	float x_tile_distance;
+	float y_tile_distance;
 	do
 	{
-		int h_tile_count = dist_h(rd);
-		int v_tile_count = dist_v(rd);
+		int x_tile_count = dist_h(rd);
+		int y_tile_count = dist_v(rd);
 
-		h_tile_distance = h_tile_count * m_cleaning_area.horizontal_tile_size() + m_cleaning_area.horizontal_tile_size() / 2;
-		v_tile_distance = v_tile_count * m_cleaning_area.vertical_tile_size() + m_cleaning_area.vertical_tile_size() / 2;
-	} while (m_cleaning_area.get_tile_on_pos(h_tile_distance, v_tile_distance).is_obstacle());
+		x_tile_distance = x_tile_count * m_cleaning_area.horizontal_tile_size() + m_cleaning_area.horizontal_tile_size() / 2;
+		y_tile_distance = y_tile_count * m_cleaning_area.vertical_tile_size() + m_cleaning_area.vertical_tile_size() / 2;
 
-	cleaner.setPosition(h_tile_distance, v_tile_distance);
+	} while (m_cleaning_area.get_tile_on_pos(x_tile_distance, y_tile_distance).is_obstacle());
+
+
+	cleaner.setPosition(x_tile_distance, y_tile_distance);
 }

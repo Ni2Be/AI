@@ -1,3 +1,11 @@
+/*
+- Game stores the playground (cleaning_area) and the
+player (cleaner). 
+- It also is responsible for the creation of the 
+playground (area_factory_NAME() functions).
+- Then it holds the game loop and the controlls.
+*/
+
 #pragma once
 
 
@@ -18,10 +26,11 @@ public:
 		m_columns			(columns),
 		m_background		(sf::Vector2f (width, height)),
 		m_cleaning_area		(area_factory_random_obstacles(width, height, rows, columns, obstacles)),
-		//radius of the cleaner is one sixth of the smaller side of the area
 		m_cleaner			(0,
 							 0, 
-							 ((height / rows) / 6 > (width / columns) / 6)? (width / columns) / 6 : (height / rows) / 6)
+							 (m_cleaning_area.horizontal_tile_size() > m_cleaning_area.vertical_tile_size())? 
+								m_cleaning_area.vertical_tile_size() / 6 : m_cleaning_area.horizontal_tile_size() / 6)
+		//radius of m_cleaner is one sixth of the smaller tile side of the area
 	{
 		m_cleaner.x_speed() = m_cleaning_area.horizontal_tile_size();
 		m_cleaner.y_speed() = m_cleaning_area.vertical_tile_size();
