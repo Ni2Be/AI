@@ -30,13 +30,13 @@ public:
 
 	//draws the tiles of the tiles vector to a window
 	void draw_to_window(sf::RenderWindow *win);
-	//returns the tile of the tiles vector the is on the coordinates
+	//returns the tile of the tiles vector that is on the coordinates
 	Tile& get_tile_on_pos(float x, float y);
 
 	//adds a row to the std::vector<Tile> m_tiles
 	void add_row(std::vector<Tile> row);
 
-	//returns one row vector of the tiles vector
+	//returns one row of the tiles vector
 	std::vector<Tile>& operator[](std::size_t index);
 
 
