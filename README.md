@@ -2,7 +2,7 @@
 Artificial Intelligence: A Modern Approach
 ## Chapter 2
 ### Cleaner exercise:
-To get an overview i recommend
+To get an overview I recommend
 starting in [Game.h](https://github.com/Nice2Bee/AI/blob/Chapter_2/Chapter%202/9%20Cleaner/9%20Cleaner/Game.h) read the comments, 
 then go to [Area.h](https://github.com/Nice2Bee/AI/blob/Chapter_2/Chapter%202/9%20Cleaner/9%20Cleaner/Area.h) and finally to
 [Agent_Vacuum_Cleaner.h](https://github.com/Nice2Bee/AI/blob/Chapter_2/Chapter%202/9%20Cleaner/9%20Cleaner/Agent_Vacuum_Cleaner.h)
