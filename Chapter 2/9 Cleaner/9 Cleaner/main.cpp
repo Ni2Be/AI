@@ -7,7 +7,7 @@
 
 int main()
 {
-	Game cleaner_game(800, 800, 5, 7, 8);
+	Game cleaner_game(800, 800, 20, 20, 100);
 
 
 	cleaner_game.run();

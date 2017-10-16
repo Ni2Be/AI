@@ -23,6 +23,8 @@ void Area::draw_to_window(sf::RenderWindow *win)
 	}
 }
 
+
+//TODO needs to be unstupided
 Tile& Area::get_tile_on_pos(int x, int y)
 {
 	for (int h = 0; h < m_row_count; h++)

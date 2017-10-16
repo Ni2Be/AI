@@ -6,6 +6,9 @@
 
 #include "Area.h"
 
+
+#define RANDOM_AGENT
+
 class Agent_Vacuum_Cleaner : public sf::CircleShape
 {
 public:
@@ -26,7 +29,8 @@ public:
 	int& y_speed() { return m_y_speed; }
 
 private:
-	void change_direction();
+	void change_direction_clockwise();
+	void change_direction_random();
 	void evaluate_next_move();
 
 	int		m_x_direction = 1;

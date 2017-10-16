@@ -1,21 +1,17 @@
 #include "Agent_Vacuum_Cleaner.h"
 #include "Physics.h"
-//#define FEEDBACK
+
+#include <random>
+
 
 void Agent_Vacuum_Cleaner::act(Area& area)
 {
-#ifdef FEEDBACK
-	std::cout << "acting.." << std::endl;
-#endif
 	m_time_counter++;
 
 	Tile& actual_tile	= area.get_tile_on_pos(this->getPosition().x, this->getPosition().y);
 	
 	if (actual_tile.is_dirty())
 	{
-#ifdef FEEDBACK
-		std::cout << "cleaning.." << std::endl;
-#endif
 		m_performance_counter++;
 		actual_tile.clean_up();
 	}
@@ -27,11 +23,19 @@ void Agent_Vacuum_Cleaner::act(Area& area)
 			.is_obstacle())
 		{
 			this->move(delta_x, delta_y);
+#ifdef RANDOM_AGENT
+			change_direction_random();
+#else 
 			evaluate_next_move();
+#endif
 		}
 		else
 		{
-			change_direction();
+#ifdef RANDOM_AGENT
+			change_direction_random();
+#else 
+			change_direction_clockwise();
+#endif
 		}
 	}
 	//else
@@ -115,22 +119,22 @@ void Agent_Vacuum_Cleaner::act(Area& area)
 	//}
 }
 
-void Agent_Vacuum_Cleaner::change_direction()
+void Agent_Vacuum_Cleaner::change_direction_clockwise()
 {
 	if (m_x_direction == 1 && m_y_direction == 0)
 	{
 		m_x_direction = 0;
 		m_y_direction = 1;
 	}
-	else if (m_x_direction == 0 && m_y_direction == 1)
-	{
-		m_x_direction = -1;
-		m_y_direction = 0;
-	}
 	else if (m_x_direction == -1 && m_y_direction == 0)
 	{
 		m_x_direction = 0;
 		m_y_direction = -1;
+	}
+	else if (m_x_direction == 0 && m_y_direction == 1)
+	{
+		m_x_direction = -1;
+		m_y_direction = 0;
 	}
 	else if (m_x_direction == 0 && m_y_direction == -1)
 	{
@@ -145,6 +149,20 @@ void Agent_Vacuum_Cleaner::change_direction()
 	}
 }
 
+void Agent_Vacuum_Cleaner::change_direction_random()
+{
+	std::random_device					rd;
+	std::uniform_int_distribution<int>	dist(0, 3);
+	int rand_num						= dist(rd);
+	switch (rand_num)
+	{
+	case 0: m_x_direction = -1; m_y_direction =  0; break;
+	case 1: m_x_direction =  1; m_y_direction =  0; break;
+	case 2: m_x_direction =  0; m_y_direction = -1; break;
+	case 3: m_x_direction =  0; m_y_direction =  1; break;
+	}
+}
+
 void Agent_Vacuum_Cleaner::evaluate_next_move()
 {
 	m_height_counter -= abs(m_x_direction);
@@ -152,12 +170,12 @@ void Agent_Vacuum_Cleaner::evaluate_next_move()
 
 	if (m_height_counter == 0)
 	{
-		change_direction();
+		change_direction_clockwise();
 		m_height_counter = ++m_height_memory;
 	}
 	if (m_width_counter == 0)
 	{
-		change_direction();
+		change_direction_clockwise();
 		m_width_counter = ++m_width_memory;
 	}
 }
