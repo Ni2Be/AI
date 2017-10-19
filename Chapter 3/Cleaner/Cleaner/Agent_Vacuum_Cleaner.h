@@ -12,18 +12,30 @@ moment. There should the smartness take place.
 #pragma once
 
 #include <iostream>
+#include <queue>
 
 #include <SFML/Graphics.hpp>
 
 #include "Area.h"
 
 
+
+enum Actions
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	CLEAN
+};
+
 class Agent_Vacuum_Cleaner : public sf::CircleShape
 {
 public:
-	Agent_Vacuum_Cleaner(float x_pos, float y_pos, float radius)
+	Agent_Vacuum_Cleaner(float x_pos, float y_pos, float radius, const Area& area)
 		:
-		sf::CircleShape	(radius)
+		sf::CircleShape	(radius),
+		m_area_model    (area)
 	{
 		this->setFillColor  (sf::Color::Blue);
 		this->setOrigin		(sf::Vector2f(radius , radius));
@@ -50,6 +62,15 @@ private:
 	//not used at the moment
 	void evaluate_next_move();
 
+
+	//generates an abstraction of the given area
+	Area_Model& generate_area_model(const Area& area);
+
+
+
+	std::queue<Actions> m_actions;
+	Area_Model		   m_area_model;
+
 	int		m_x_direction = 1;
 	int		m_y_direction = 0;
 	float	m_x_speed = 1.0f;
@@ -57,4 +78,55 @@ private:
 
 	int		m_performance_counter = 0;
 	int		m_time_counter = 0;
+};
+
+
+
+/*
+area model is a model of the given area
+that makes it possible to give every tile a value.
+The starting Value is 0, and obstacles will be marked
+with a bool.
+______
+|0000|
+|00X0|
+|0000|
+|X000|
+------
+*/
+class Area_Model
+{
+public:
+	//generates the model of the area
+	Area_Model(const Area& area, int start_row, int start_column);
+
+
+	//finds the shortest cleaning path through the area
+	//and returns it as a queue of actions
+	std::queue<Actions>  generate_solution(const Area_Model& area);
+
+
+private:
+	class Tile_Model
+	{
+	public:
+		Tile_Model(int value, bool is_obstacle)
+			:
+			m_value(value),
+			m_is_obstacle(is_obstacle)
+		{}
+		int   m_value;
+		bool  m_is_obstacle;
+	};
+
+
+	//returns the minimum moves needed to clean the given area
+	int					heuristic_function(const Area& area);
+
+
+
+	int									 m_start_row;
+	int									 m_start_column;
+	int									 m_heuristic_value;
+	std::vector<std::vector<Tile_Model>> m_tiles;
 };

@@ -52,6 +52,12 @@ std::vector<Tile>& Area::operator[](std::size_t index)
 	return this->m_tiles[index];
 }
 
+std::vector<Tile>& Area::operator[](std::size_t index) const
+{
+	return this->m_tiles[index];
+}
+
+
 void Tile::clean_up()
 {
 	this->is_dirty()	= false;

@@ -29,7 +29,8 @@ public:
 		m_cleaner			(0,
 							 0, 
 							 (m_cleaning_area.horizontal_tile_size() > m_cleaning_area.vertical_tile_size())? 
-								m_cleaning_area.vertical_tile_size() / 6 : m_cleaning_area.horizontal_tile_size() / 6)
+								m_cleaning_area.vertical_tile_size() / 6 : m_cleaning_area.horizontal_tile_size() / 6,
+							 m_cleaning_area)
 		//radius of m_cleaner is one sixth of the smaller tile side of the area
 	{
 		m_cleaner.x_speed() = m_cleaning_area.horizontal_tile_size();

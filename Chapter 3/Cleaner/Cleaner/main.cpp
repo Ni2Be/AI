@@ -31,7 +31,7 @@ The only restrictions are the ones from the sfml library
 
 int main()
 {
-	Game cleaner_game(800, 800, 20, 20, 30);
+	Game cleaner_game(800, 800, 4, 4, 0);
 	cleaner_game.run();
 
 	return 0;

@@ -81,3 +81,57 @@ void Agent_Vacuum_Cleaner::change_direction_clockwise()
 		m_y_direction = 0;
 	}
 }
+
+
+Area_Model::Area_Model(const Area& area, int start_row, int start_column)
+	:
+	m_start_row(start_row),
+	m_start_column(start_column)
+{
+	//calculate heuristic
+	m_heuristic_value = heuristic_function(area);
+
+	//fill model
+	for (int r = 0; r < area.row_count(); r++)
+	{
+		std::vector<Tile_Model> row;
+		for (int c = 0; c < area.column_count(); c++)
+		{
+			row.push_back(Tile_Model(0, area[r][c].is_obstacle()));
+		}
+		m_tiles.push_back(row);
+	}
+}
+
+//in best case the cleaner only needs to move over every tile ones
+//and can clean the tile where he started without moving
+int Area_Model::heuristic_function(const Area& area)
+{
+	return area.column_count() * area.row_count() - 1;
+}
+
+std::queue<Actions>  Area_Model::generate_solution(const Area_Model& area)
+{
+	struct Path
+	{
+		int					 path_cost = 0;
+		int					 actual_row;
+		int					 actual_column;
+		std::vector<Actions> actions;
+	};
+
+	auto cmp = [](Path& left, Path& right) { return left.path_cost < right.path_cost; };
+
+	std::priority_queue<Path, std::deque<Path>, decltype(cmp)>	paths(cmp);
+	
+	Path actual_path = initial_path(area);
+
+	do
+	{
+		//TODO
+		paths.push(possible_paths(actual_path));
+
+		actual_path = paths.top();
+		paths.pop();
+	} while (actual_path.path_cost >= paths.top().path_cost);
+}
