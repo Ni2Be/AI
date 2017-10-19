@@ -1,0 +1,12 @@
+﻿  Area.cpp
+Area.cpp(10): warning C4244: "Initialisierung": Konvertierung von "int" in "float", möglicher Datenverlust
+  Game.cpp
+d:\programmieren\ai\chapter 2\cleaner\cleaner\Game.h(27): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+  main.cpp
+d:\programmieren\ai\chapter 2\cleaner\cleaner\Game.h(27): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+  Agent_Vacuum_Cleaner.cpp
+  Physics.cpp
+  Code wird generiert.
+  All 366 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Codegenerierung ist abgeschlossen.
+  Cleaner.vcxproj -> D:\Programmieren\AI\Chapter 2\Cleaner\x64\Release\Cleaner.exe
