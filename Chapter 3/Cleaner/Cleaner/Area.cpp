@@ -23,7 +23,7 @@ void Area::draw_to_window(sf::RenderWindow *win)
 	}
 }
 
-int	Area::float_modulo(float left, float right)
+int	Area::float_modulo(float left, float right) const
 {
 	int mod = 0;
 	while (left - right >= 0)
@@ -42,6 +42,15 @@ Tile& Area::get_tile_on_pos(float x, float y)
 	return m_tiles[row][column];
 }
 
+std::pair<int, int> Area::get_row_column_on_pos(float x, float y) const
+{
+	std::pair<int, int>   pos;
+	pos.first             = float_modulo(x, m_horizontal_tile_size);
+	pos.second            = float_modulo(y, m_vertical_tile_size);
+	return				  pos;
+}
+
+
 void Area::add_row(std::vector<Tile> row)
 {
 	this->m_tiles.push_back(row);
@@ -52,11 +61,10 @@ std::vector<Tile>& Area::operator[](std::size_t index)
 	return this->m_tiles[index];
 }
 
-std::vector<Tile>& Area::operator[](std::size_t index) const
+std::vector<Tile>& Area::operator[](int index)
 {
 	return this->m_tiles[index];
 }
-
 
 void Tile::clean_up()
 {

@@ -34,14 +34,15 @@ public:
 	Tile& get_tile_on_pos(float x, float y);
 
 	//returns the tiles row and column of the tiles vector that is on the coordinates
-	std::pair<int, int> get_tile_row_column_on_pos(float x, float y);
+	std::pair<int, int> get_row_column_on_pos(float x, float y) const;
 
 	//adds a row to the std::vector<Tile> m_tiles
 	void add_row(std::vector<Tile> row);
 
 	//returns one row of the tiles vector
 	std::vector<Tile>& operator[](std::size_t index);
-	std::vector<Tile>& operator[](std::size_t index) const;
+	//returns one row of the tiles vector
+	std::vector<Tile>& operator[](int index);
 
 
 	float	width()					const { return m_width; };
@@ -53,7 +54,7 @@ public:
 private:
 	//returns the count of how often right fits fully into left
 	//could possibly return the wrong number due to floating point inaccuracy
-	int		float_modulo			(float left, float right);
+	int		float_modulo			(float left, float right) const;
 
 	float							m_width;
 	float							m_height;

@@ -83,11 +83,14 @@ void Agent_Vacuum_Cleaner::change_direction_clockwise()
 }
 
 
-Area_Model::Area_Model(const Area& area, int start_row, int start_column)
-	:
-	m_start_row(start_row),
-	m_start_column(start_column)
+Area_Model::Area_Model(Area& area, float cleaner_start_x, float cleaner_start_y)
 {
+	//evaluate position of the cleaner
+	std::pair<int, int>    cleaner_pos;
+	cleaner_pos			   = area.get_row_column_on_pos(cleaner_start_x, cleaner_start_y);
+	this->m_cleaner_row    = cleaner_pos.first;
+	this->m_cleaner_column = cleaner_pos.second;
+
 	//calculate heuristic
 	m_heuristic_value = heuristic_function(area);
 
@@ -102,6 +105,9 @@ Area_Model::Area_Model(const Area& area, int start_row, int start_column)
 		m_tiles.push_back(row);
 	}
 }
+
+
+
 
 //in best case the cleaner only needs to move over every tile ones
 //and can clean the tile where he started without moving
@@ -124,14 +130,15 @@ std::queue<Actions>  Area_Model::generate_solution(const Area_Model& area)
 
 	std::priority_queue<Path, std::deque<Path>, decltype(cmp)>	paths(cmp);
 	
-	Path actual_path = initial_path(area);
+	//Path actual_path = initial_path(area);
 
-	do
-	{
-		//TODO
-		paths.push(possible_paths(actual_path));
+	//do
+	//{
+	//	//TODO
+	//	paths.push(possible_paths(actual_path));
 
-		actual_path = paths.top();
-		paths.pop();
-	} while (actual_path.path_cost >= paths.top().path_cost);
+	//	actual_path = paths.top();
+	//	paths.pop();
+	//} while (actual_path.path_cost >= paths.top().path_cost);
+
 }
